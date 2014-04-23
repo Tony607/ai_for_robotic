@@ -73,11 +73,45 @@ cost_step = 1
 # 2) ...NOT take any arguments.
 # 3) ...return two grids: FIRST value and THEN policy.
 
+
 def stochastic_value():
     value = [[1000 for row in range(len(grid[0]))] for col in range(len(grid))]
     policy = [[' ' for row in range(len(grid[0]))] for col in range(len(grid))]
-    
-    return value, policy
-
-
-
+    change = True            
+    while change:
+        change = False
+        for x in range(len(grid)):
+            for y in range(len(grid[0])):
+                if goal[0] == x and goal[1] == y:
+                    if value[x][y] > 0:
+                        value[x][y] = 0
+                        policy[x][y] = '*'
+                        change = True
+                elif grid[x][y] == 0:
+                    for a in range(len(delta)):
+                        x2 = x + delta[a][0]
+                        y2 = y + delta[a][1]
+                        if x2 >= 0 and x2 < len(grid) and y2 >=0 and y2< len(grid[0]):
+                            bothside = [(a+1)%4, (a+3)%4]
+                            bothsidevalue = [0,0]
+                            for s in range(len(bothside)):
+                                xtemp = x + delta[bothside[s]][0]
+                                ytemp = y + delta[bothside[s]][1]
+                                if xtemp >= 0 and xtemp < len(grid) and ytemp >=0 and ytemp< len(grid[0]):
+                                    bothsidevalue[s] = value[xtemp][ytemp]
+                                else:
+                                    bothsidevalue[s] = collision_cost
+                                    
+                            v2 = value[x2][y2] * success_prob + (bothsidevalue[0] + bothsidevalue[1]) * failure_prob + cost_step
+                            if v2 < value[x][y]:
+                                change = True
+                                value[x][y] =  v2
+                                policy[x][y] = delta_name[a]
+           
+    for i in range(len(value)):
+        print value[i]    
+    for i in range(len(policy)):
+        print policy[i]
+    return value, policy #make sure your function returns a grid of values as demonstrated in the previous video.
+ 
+stochastic_value()
