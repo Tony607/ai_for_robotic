@@ -77,7 +77,7 @@ def compute_value():
         for j in range(len(value[0])):
             if value[i][j] == -1:
                 value[i][j] = 99
-            
+             
         
     return value #make sure your function returns a grid of values as demonstrated in the previous video.
 
