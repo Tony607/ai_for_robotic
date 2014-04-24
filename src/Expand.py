@@ -354,7 +354,7 @@ def doit(initial_pos, move1, move2, Z0, Z1, Z2):
     #landmark measurements
     Omega = Omega.expand(4, 4, [0,1, 2], [0,1, 2])
     Xi = Xi.expand(4, 1, [0,1,2], [0])
-    #first landmark
+    #first pose see landmark
     Omega += matrix([[1.0, 0.0, 0.0, -1.0],
                      [0.0, 0.0, 0.0, 0.0],
                      [0.0, 0.0, 0.0, 0.0],
@@ -363,7 +363,7 @@ def doit(initial_pos, move1, move2, Z0, Z1, Z2):
                   [0.0],
                   [0.0],
                   [Z0]])
-    #second landmark
+    #second pose see landmark
     Omega += matrix([[0.0, 0.0, 0.0, 0.0],
                      [0.0, 1.0, 0.0, -1.0],
                      [0.0, 0.0, 0.0, 0.0],
@@ -372,7 +372,7 @@ def doit(initial_pos, move1, move2, Z0, Z1, Z2):
                   [-Z1],
                   [0.0],
                   [Z1]])
-    #third landmark
+    #third pose see landmark
     Omega += matrix([[0.0, 0.0, 0.0, 0.0],
                      [0.0, 0.0, 0.0, 0.0],
                      [0.0, 0.0, 1.0, -1.0],
